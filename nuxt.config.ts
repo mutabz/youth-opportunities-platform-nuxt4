@@ -3,6 +3,12 @@ export default defineNuxtConfig({
   ssr: true,
 
   devtools: { enabled: false },
+  nitro: {
+    preset: 'vercel',
+    externals: {
+      inline: ['vue', 'vue-router']
+    }
+  },
 
   app: {
     head: {
