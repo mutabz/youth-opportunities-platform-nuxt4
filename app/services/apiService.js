@@ -6,8 +6,6 @@ export class ApiService {
 
   async getAll() {
     const response = await this.api.get(`/${this.endpoint}`)
-    alert('dataaaaaaaaaaaaa')
-    alert(String(response.date))
     return response.data
   }
 

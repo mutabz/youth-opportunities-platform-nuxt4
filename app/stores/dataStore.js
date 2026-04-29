@@ -111,7 +111,6 @@ export const useDataStore = defineStore('dataStore', {
 
     /* ================= FETCH ================= */
     async fetchData(model, forceReload = false, id = null) {
-      alert(`requesting ${model}`)
       try {
         if (!models.includes(model)) {
           throw new Error(`Model ${model} not registered`)

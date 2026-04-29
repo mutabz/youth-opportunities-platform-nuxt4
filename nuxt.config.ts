@@ -44,7 +44,7 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      baseURL: process.env.NUXT_PUBLIC_BACKEND_URL || 'https://oppoXX.pythonanywhere.com/api'
+      baseURL: process.env.NUXT_PUBLIC_BACKEND_URL || 'https://oppoxx.pythonanywhere.com/api'
     }
   },
 
