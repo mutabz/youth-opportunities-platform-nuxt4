@@ -155,7 +155,7 @@ export const useDataStore = defineStore('dataStore', {
           this.loading[model] = false
         }
       } catch (e) {
-        alert(e)
+        alert(`Error here: ${e}`)
       }
     },
 
