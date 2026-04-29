@@ -109,48 +109,52 @@ export const useDataStore = defineStore('dataStore', {
 
     /* ================= FETCH ================= */
     async fetchData(model, forceReload = false, id = null) {
-
-      if (!models.includes(model)) {
-        throw new Error(`Model ${model} not registered`)
-      }
-
-      this.ensureModelState(model)
-
-      if (process.client) {
-        if (!process.client) return null
-        const cached = localStorage.getItem(model)
-
-        if (!forceReload && cached) {
-          this.items[model] = JSON.parse(cached)
-          return this.items[model]
-        }
-      }
-
-      const service = this.getService(model)
-
+      alert(`requesting ${model}`)
       try {
-        this.loading[model] = true
-        this.error[model] = null
+        if (!models.includes(model)) {
+          throw new Error(`Model ${model} not registered`)
+        }
 
-        let data = id
-          ? await service.getOne(id)
-          : await service.getAll()
-
-        this.items[model] = data?.items || data || []
+        this.ensureModelState(model)
 
         if (process.client) {
           if (!process.client) return null
-          localStorage.setItem(model, JSON.stringify(this.items[model]))
+          const cached = localStorage.getItem(model)
+
+          if (!forceReload && cached) {
+            this.items[model] = JSON.parse(cached)
+            return this.items[model]
+          }
         }
 
-        return this.items[model]
+        const service = this.getService(model)
 
-      } catch (err) {
-        this.error[model] =
-          err.response?.data?.message || err.message || 'Fetch failed'
-        return null
-      } finally {
-        this.loading[model] = false
+        try {
+          this.loading[model] = true
+          this.error[model] = null
+
+          let data = id
+            ? await service.getOne(id)
+            : await service.getAll()
+
+          this.items[model] = data?.items || data || []
+
+          if (process.client) {
+            if (!process.client) return null
+            localStorage.setItem(model, JSON.stringify(this.items[model]))
+          }
+
+          return this.items[model]
+
+        } catch (err) {
+          this.error[model] =
+            err.response?.data?.message || err.message || 'Fetch failed'
+          return null
+        } finally {
+          this.loading[model] = false
+        }
+      } catch (e) {
+        alert(e)
       }
     },
 
