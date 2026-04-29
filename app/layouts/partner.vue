@@ -12,12 +12,15 @@ import { useRoute } from 'vue-router'
 
 const dataStore = useDataStore()
 const route = useRoute()
+
 const data = ref({
   page_url: '',
   referrer: ''
 })
 
 const trackPage = async () => {
+  if (!process.client) return
+
   try {
     data.value = {
       page_url: window.location.pathname,
@@ -30,13 +33,15 @@ const trackPage = async () => {
   }
 }
 
-watch(
-  () => route.fullPath,
-  () => {
-    trackPage()
-  },
-  { immediate: true } // also runs on first load
-)
+onMounted(() => {
+  watch(
+    () => route.fullPath,
+    () => {
+      trackPage()
+    },
+    { immediate: true }
+  )
+})
 </script>
 
 <style scoped>

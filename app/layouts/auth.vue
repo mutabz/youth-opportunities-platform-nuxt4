@@ -22,19 +22,23 @@
 </template>
 
 <script setup>
+import { ref, watch, onMounted } from 'vue'
 import { useDataStore } from '~/stores/dataStore'
 import { useRoute } from 'vue-router'
 
 const dataStore = useDataStore()
-const model = 'opportunities'
-
 const route = useRoute()
+
 const data = ref({
   page_url: '',
   referrer: ''
 })
 
+const year = new Date().getFullYear()
+
 const trackPage = async () => {
+  if (!process.client) return
+
   try {
     data.value = {
       page_url: window.location.pathname,
@@ -43,18 +47,19 @@ const trackPage = async () => {
 
     await dataStore.createItem('track', data.value)
   } catch (e) {
-    console.log("Tracking failed:", e)
+    console.log('Tracking failed:', e)
   }
 }
 
-watch(
-  () => route.fullPath,
-  () => {
-    trackPage()
-  },
-  { immediate: true } // also runs on first load
-)
-const year = new Date().getFullYear()
+onMounted(() => {
+  watch(
+    () => route.fullPath,
+    () => {
+      trackPage()
+    },
+    { immediate: true }
+  )
+})
 </script>
 
 <style scoped>

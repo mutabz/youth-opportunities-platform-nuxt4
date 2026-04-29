@@ -10,19 +10,22 @@
 <script setup>
 import AdminNavBar from '~/components/AdminNavBar.vue'
 import { useDataStore } from '~/stores/dataStore'
-import { onMounted } from 'vue'
 import { useRoute } from 'vue-router'
+import { ref, computed, onMounted, watch } from 'vue'
 
 const dataStore = useDataStore()
+const route = useRoute()
+
 const model = 'opportunities'
 
-const route = useRoute()
 const data = ref({
   page_url: '',
   referrer: ''
 })
 
 const trackPage = async () => {
+  if (!process.client) return
+
   try {
     data.value = {
       page_url: window.location.pathname,
@@ -31,19 +34,22 @@ const trackPage = async () => {
 
     await dataStore.createItem('track', data.value)
   } catch (e) {
-    console.log("Tracking failed:", e)
+    console.log('Tracking failed:', e)
   }
 }
 
-watch(
-  () => route.fullPath,
-  () => {
-    trackPage()
-  },
-  { immediate: true } // also runs on first load
-)
+// SAFE: only start watcher after client mount
+onMounted(() => {
+  watch(
+    () => route.fullPath,
+    () => {
+      trackPage()
+    },
+    { immediate: true }
+  )
+})
 
-// Computed props for easier template binding
+// Computed props
 const items = computed(() => dataStore.items[model])
 const loading = computed(() => dataStore.loading[model])
 const error = computed(() => dataStore.error[model])
@@ -53,11 +59,9 @@ const truncate = (text, length) => {
   return text.length > length ? text.slice(0, length) + '...' : text
 }
 
-// Fetch data on component mount
 onMounted(async () => {
   await dataStore.fetchData(model)
 })
-
 </script>
 
 <style scoped>

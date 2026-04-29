@@ -57,7 +57,6 @@ export default defineNuxtConfig({
   modules: [
     '@pinia/nuxt',
     '@nuxt/icon',
-    'nuxt-seo'
   ],
 
   icon: {

@@ -65,32 +65,30 @@ import Navbar from '~/components/Navbar.vue'
 import Footerbar from '~/components/Footerbar.vue'
 import AdUnit from '~/components/AdUnit.vue'
 import { useRoute } from 'vue-router'
-
 import { useDataStore } from '~/stores/dataStore'
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
 import { useDeviceType } from "@/composables/useDeviceType";
 
-const { device } = useDeviceType();
+const { device } = useDeviceType()
 const dataStore = useDataStore()
-const opportunityTypes = ref([])
-const model = 'opportunities'
-
 const route = useRoute()
+
+const opportunityTypes = ref([])
+const form = ref({})
+const searchQuery = ref('')
+const statusFilter = ref('')
+const typeFilter = ref('')
+const opportunityCategories = ref([])
+const items = ref([])
+
 const data = ref({
   page_url: '',
   referrer: ''
 })
-const form = ref({})
-
-const searchQuery = ref('')
-const statusFilter = ref('')
-const typeFilter = ref('')
-const opportunityCategories = ref('')
-
-const items = ref([])
-
 
 const trackPage = async () => {
+  if (!process.client) return
+
   try {
     data.value = {
       page_url: window.location.pathname,
@@ -99,21 +97,16 @@ const trackPage = async () => {
 
     await dataStore.createItem('track', data.value)
   } catch (e) {
-    console.log("Tracking failed:", e)
+    console.log('Tracking failed:', e)
   }
-}
-
-const truncate = (text, length) => {
-  if (!text) return ''
-  return text.length > length ? text.slice(0, length) + '...' : text
 }
 
 const fetchOpportunities = async (force = false) => {
   await dataStore.fetchData('opportunities', force)
   await dataStore.fetchData('opp_category')
-  items.value = dataStore.items.opportunities
-  opportunityCategories.value = dataStore.items.opp_category
 
+  items.value = dataStore.items.opportunities || []
+  opportunityCategories.value = dataStore.items.opp_category || []
 }
 
 const filteredOpportunities = computed(() => {
@@ -137,21 +130,23 @@ const filteredOpportunities = computed(() => {
 const submitSubscribe = async () => {
   try {
     await dataStore.createItem('subscribe', form.value)
-    alert("Subscribed")
+    alert('Subscribed')
   } catch (e) {
-    console.log(`Error occured!! ${e}`)
+    console.log(e)
   }
 }
 
-watch(
-  () => route.fullPath,
-  () => {
-    trackPage()
-  },
-  { immediate: true } // also runs on first load
-)
+onMounted(() => {
+  fetchOpportunities()
 
-onMounted(fetchOpportunities)
+  watch(
+    () => route.fullPath,
+    () => {
+      trackPage()
+    },
+    { immediate: true }
+  )
+})
 </script>
 
 <style scoped>
