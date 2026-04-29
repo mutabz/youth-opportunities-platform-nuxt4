@@ -1,7 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   ssr: true,
-
+  compatibilityDate: '2026-04-29',
   devtools: { enabled: false },
   nitro: {
     preset: 'vercel',

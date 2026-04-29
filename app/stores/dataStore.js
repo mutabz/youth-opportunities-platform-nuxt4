@@ -8,15 +8,17 @@ function getTimestampKey(key) {
 }
 
 function isCacheExpired(key) {
-  if (!process.client) return null
-  const ts = localStorage.getItem(getTimestampKey(key))
-  if (!ts) return true
-  return Date.now() - Number(ts) > CACHE_DURATION_MS
+  if (process.client) {
+    const ts = localStorage.getItem(getTimestampKey(key))
+    if (!ts) return true
+    return Date.now() - Number(ts) > CACHE_DURATION_MS
+  }
 }
 
 function updateCacheTimestamp(key) {
-  if (!process.client) return null
-  localStorage.setItem(getTimestampKey(key), Date.now().toString())
+  if (process.client) {
+    localStorage.setItem(getTimestampKey(key), Date.now().toString())
+  }
 }
 
 const models = [
@@ -97,7 +99,6 @@ export const useDataStore = defineStore('dataStore', {
     /* ================= INTERNAL HELPER ================= */
     getService(model) {
       const { $api } = useNuxtApp()
-      alert($api)
       return new ApiService(model, $api)
     },
 
@@ -119,7 +120,6 @@ export const useDataStore = defineStore('dataStore', {
         this.ensureModelState(model)
 
         if (process.client) {
-          if (!process.client) return null
           const cached = localStorage.getItem(model)
 
           if (!forceReload && cached) {
@@ -141,7 +141,6 @@ export const useDataStore = defineStore('dataStore', {
           this.items[model] = data?.items || data || []
 
           if (process.client) {
-            if (!process.client) return null
             localStorage.setItem(model, JSON.stringify(this.items[model]))
           }
 
