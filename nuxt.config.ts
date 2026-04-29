@@ -57,6 +57,8 @@ export default defineNuxtConfig({
   modules: [
     '@pinia/nuxt',
     '@nuxt/icon',
+    '@nuxtjs/sitemap',
+    '@nuxtjs/robots'
   ],
 
   icon: {
