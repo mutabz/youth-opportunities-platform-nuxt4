@@ -3,15 +3,20 @@ import { ApiService } from '~/services/apiService'
 
 const CACHE_DURATION_MS = 10 * 60 * 1000
 
-
-function safeLocalStorageGet(key) {
-  if (!process.client) return null
-  return localStorage.getItem(key)
+function getTimestampKey(key) {
+  return `${key}_timestamp`
 }
 
-function safeLocalStorageSet(key, value) {
-  if (!process.client) return
-  localStorage.setItem(key, value)
+function isCacheExpired(key) {
+  if (!process.client) return null
+  const ts = localStorage.getItem(getTimestampKey(key))
+  if (!ts) return true
+  return Date.now() - Number(ts) > CACHE_DURATION_MS
+}
+
+function updateCacheTimestamp(key) {
+  if (!process.client) return null
+  localStorage.setItem(getTimestampKey(key), Date.now().toString())
 }
 
 const models = [
@@ -77,6 +82,7 @@ const models = [
   'users_fcm_token',
 ]
 
+
 export const useDataStore = defineStore('dataStore', {
 
   state: () => ({
@@ -88,6 +94,7 @@ export const useDataStore = defineStore('dataStore', {
 
   actions: {
 
+    /* ================= INTERNAL HELPER ================= */
     getService(model) {
       const { $api } = useNuxtApp()
       return new ApiService(model, $api)
@@ -100,6 +107,7 @@ export const useDataStore = defineStore('dataStore', {
       if (!this.error[model]) this.error[model] = null
     },
 
+    /* ================= FETCH ================= */
     async fetchData(model, forceReload = false, id = null) {
 
       if (!models.includes(model)) {
@@ -108,11 +116,11 @@ export const useDataStore = defineStore('dataStore', {
 
       this.ensureModelState(model)
 
-      // ✅ SAFE CACHE READ
-      if (!forceReload) {
-        const cached = safeLocalStorageGet(model)
+      if (process.client) {
+        if (!process.client) return null
+        const cached = localStorage.getItem(model)
 
-        if (cached) {
+        if (!forceReload && cached) {
           this.items[model] = JSON.parse(cached)
           return this.items[model]
         }
@@ -130,8 +138,10 @@ export const useDataStore = defineStore('dataStore', {
 
         this.items[model] = data?.items || data || []
 
-        // ✅ SAFE CACHE WRITE
-        safeLocalStorageSet(model, JSON.stringify(this.items[model]))
+        if (process.client) {
+          if (!process.client) return null
+          localStorage.setItem(model, JSON.stringify(this.items[model]))
+        }
 
         return this.items[model]
 
@@ -144,7 +154,9 @@ export const useDataStore = defineStore('dataStore', {
       }
     },
 
+    /* ================= CREATE ================= */
     async createItem(model, payload) {
+
       this.ensureModelState(model)
       const service = this.getService(model)
 
@@ -167,7 +179,9 @@ export const useDataStore = defineStore('dataStore', {
       }
     },
 
+    /* ================= UPDATE ================= */
     async updateItem(model, id, payload) {
+
       this.ensureModelState(model)
       const service = this.getService(model)
 
@@ -177,6 +191,7 @@ export const useDataStore = defineStore('dataStore', {
         this.message[model] = res?.message || 'Updated successfully'
 
         const index = this.items[model].findIndex(i => i.id === id)
+
         if (index !== -1) {
           this.items[model][index] = res?.item || res
         }
@@ -190,7 +205,9 @@ export const useDataStore = defineStore('dataStore', {
       }
     },
 
+    /* ================= DELETE ================= */
     async deleteItem(model, id) {
+
       this.ensureModelState(model)
       const service = this.getService(model)
 
