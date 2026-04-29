@@ -97,6 +97,7 @@ export const useDataStore = defineStore('dataStore', {
     /* ================= INTERNAL HELPER ================= */
     getService(model) {
       const { $api } = useNuxtApp()
+      alert($api)
       return new ApiService(model, $api)
     },
 
