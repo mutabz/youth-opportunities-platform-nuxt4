@@ -149,6 +149,7 @@ export const useDataStore = defineStore('dataStore', {
         } catch (err) {
           this.error[model] =
             err.response?.data?.message || err.message || 'Fetch failed'
+          alert(`Error 000: ${this.error[model]}`)
           return null
         } finally {
           this.loading[model] = false
