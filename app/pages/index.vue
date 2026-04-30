@@ -60,7 +60,7 @@
                 <h2>Recommended for You</h2>
                 <p>Based on the latest deadlines and high success rates.</p>
             </div>
-            <div class="opp-grid">
+            <div class="opp-grid" v-if="items.length !== 0">
                 <div class="card shadow-lg h-100 rounded-4" v-for="opp in items" key="opp.id">
                     <div class="card-header">
                         <NuxtLink :to="'/opportunities/' + opp.category + '-data/' + opp.id" class="text-blue fw-bold">{{ opp.title }}</NuxtLink>
@@ -74,7 +74,7 @@
                     </div>
 
                     <div class="card-footer">
-                        <span class="deadline"><Icon name="fa6-solid:location-pin"/> {{ truncate(opp.host_country, 10) }}, {{ truncate(opp.location.city, 10) }}</span>
+                        <span class="deadline"><Icon name="fa6-solid:location-pin"/> {{ truncate(opp.host_country, 10) }}, {{ truncate(opp.location?.city, 10) }}</span>
                         <NuxtLink :to="'/opportunities/' + opp.category + '-data/' + opp.id" class="btn btn-outline-primary rounded-4" style="font-size: 0.8rem; padding: 0.4rem 1rem;">View Details</NuxtLink>
                     </div>
                 </div>
