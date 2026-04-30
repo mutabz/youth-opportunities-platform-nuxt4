@@ -17,8 +17,11 @@ export default defineNuxtConfig({
       },
 
       title: 'Youth Opportunities Platform Rwanda',
-
       meta: [
+        {
+          name: 'google-site-verification',
+          content: 'FZvlopPJ411qUNx8JoKvjov96-iGx7q5V5fMXxDo5bM'
+        },
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
         { name: 'description', content: 'Find scholarships, jobs, internships, grants and youth opportunities in Rwanda.' }
