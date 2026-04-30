@@ -71,7 +71,7 @@
               </div>
               <div class="card-content">
                 <h3 class="label">{{ opp.title }}</h3>
-                <p>{{ truncate(opp.description[0] || '', 100) }}</p>
+                <p>{{ truncate(opp.description?.[0] || '', 100) }}</p>
                 <div class="card-footer">
                   <span class="deadline"><Icon name="fa6-solid:location-pin"/> {{ truncate(opp.host_country, 10) }}, {{ truncate(opp.location.city, 10) }}</span>
                   <NuxtLink :to="'/opportunities/' + opp.id" class="btn btn-outline-primary rounded-4" style="font-size: 0.8rem; padding: 0.4rem 1rem;">View Details</NuxtLink>

@@ -65,7 +65,7 @@
               </div>
               <div class="card-content">
                 <h3 class="label">{{ opp.title }}</h3>
-                <p>{{ truncate(opp.description[0] || '', 100) }}</p>
+                <p>{{ truncate(opp.description?.[0] || '', 100) }}</p>
                 <div class="card-footer">
                   <span class="deadline"><Icon name="fa6-solid:location-pin"/> {{ truncate(opp.host_country, 10) }}, {{ truncate(opp.location.city, 10) }}</span>
 
@@ -139,7 +139,7 @@ const searchResults = computed(() => {
 
   return items.value
     ?.filter(opp =>
-      opp.description[0]?.toLowerCase().includes(searchQuery.value.toLowerCase()) || opp.title?.toLowerCase().includes(searchQuery.value.toLowerCase())
+      opp.description?.[0]?.toLowerCase().includes(searchQuery.value.toLowerCase()) || opp.title?.toLowerCase().includes(searchQuery.value.toLowerCase())
     )
     .slice(0, 5)
 })

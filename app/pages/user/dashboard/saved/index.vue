@@ -79,11 +79,11 @@
             {{ opp.opp_saved_at }}
           </div>
           <div class="card-body">
-            <p class="text-muted">{{ truncate(opp.description[0], 200) }}</p>
+            <p class="text-muted">{{ truncate(opp.description?.[0], 200) }}</p>
 
             <div class="d-flex justify-content-between small text-muted">
               <span><strong>Location:</strong> {{ opp.host_country }}</span>
-              <span><strong>Deadline:</strong> {{ opp.details.application.deadline }}</span>
+              <span><strong>Deadline:</strong> {{ opp.details?.application.deadline }}</span>
             </div>
           </div>
 
@@ -184,7 +184,7 @@ const searchResults = computed(() => {
 
   return items.value
     ?.filter(opp =>
-      opp.description[0]?.toLowerCase().includes(searchQuery.value.toLowerCase()) || opp.title?.toLowerCase().includes(searchQuery.value.toLowerCase())
+      opp.description?.[0]?.toLowerCase().includes(searchQuery.value.toLowerCase()) || opp.title?.toLowerCase().includes(searchQuery.value.toLowerCase())
     )
     .slice(0, 5)
 })

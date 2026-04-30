@@ -66,10 +66,10 @@
                         <NuxtLink :to="'/opportunities/' + opp.category + '-data/' + opp.id" class="text-blue fw-bold">{{ opp.title }}</NuxtLink>
                     </div>
                     <div class="card-body">                        
-                        <div>{{ truncate(opp.description[0] || '', 100) }}</div>
+                        <div>{{ truncate(opp.description?.[0] || '', 100) }}</div>
                         <div class="d-flex align-items-center justify-content-between mt-3 mb-0">
                             <div class="bg-primary badge">{{ opp.category  || 'Opportunity' }}</div>
-                            <div class="text-danger"><strong class="me-3">Deadline: </strong>{{ opp.details.application.deadline }}</div>
+                            <div class="text-danger"><strong class="me-3">Deadline: </strong>{{ opp.details?.application.deadline }}</div>
                         </div>
                     </div>
 
@@ -253,7 +253,7 @@ const searchResults = computed(() => {
 
   return items.value
     ?.filter(opp =>
-      opp.description[0]?.toLowerCase().includes(searchQuery.value.toLowerCase()) || opp.title?.toLowerCase().includes(searchQuery.value.toLowerCase())
+      opp.description?.[0]?.toLowerCase().includes(searchQuery.value.toLowerCase()) || opp.title?.toLowerCase().includes(searchQuery.value.toLowerCase())
     )
     .slice(0, 5)
 })

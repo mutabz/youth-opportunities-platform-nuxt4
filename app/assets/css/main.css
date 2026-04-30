@@ -14,8 +14,8 @@
 user-select: none;
 }
 
-
-body {
+body{
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     background-color: transparent;
     color: var(--text-main);
     overflow-x: hidden;

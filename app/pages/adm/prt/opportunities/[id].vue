@@ -500,17 +500,17 @@
             </div>
 
             <!-- APPLICATION -->
-            <div class="item-card glow-animated mt-3" v-if="form.details.application">
+            <div class="item-card glow-animated mt-3" v-if="form.details?.application">
               <div class="card-body">
                 <h6 class="fw-bold title">Application</h6>
 
-                <div class="content"><strong>Mode:</strong> {{ form.details.application.application_mode }}</div>
-                <div class="content"><strong>Fee:</strong> {{ form.details.application.application_fee }}</div>
-                <div class="content"><strong>Deadline:</strong> {{ form.details.application.deadline }}</div>
+                <div class="content"><strong>Mode:</strong> {{ form.details?.application.application_mode }}</div>
+                <div class="content"><strong>Fee:</strong> {{ form.details?.application.application_fee }}</div>
+                <div class="content"><strong>Deadline:</strong> {{ form.details?.application.deadline }}</div>
 
                 <a
-                  v-if="form.details.application.application_link"
-                  :href="form.details.application.application_link"
+                  v-if="form.details?.application.application_link"
+                  :href="form.details?.application.application_link"
                   target="_blank"
                   class="btn btn-ocean mt-2"
                 >

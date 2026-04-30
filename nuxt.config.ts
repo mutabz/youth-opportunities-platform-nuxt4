@@ -26,10 +26,6 @@ export default defineNuxtConfig({
 
       link: [
         { rel: 'icon', type: 'image/webp', href: '/favicon.webp' },
-        {
-          rel: 'stylesheet',
-          href: 'https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600;700&display=swap'
-        }
       ],
 
       script: [
