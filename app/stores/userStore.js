@@ -48,8 +48,6 @@ export const useUserStore = defineStore('user', {
         }
 
         await this.fetchUser()
-
-        await router.push('/user/dashboard')
       } catch (err) {
         this.error =
           err.response?.data?.message || 'Login failed'
@@ -90,7 +88,6 @@ export const useUserStore = defineStore('user', {
       useCookie('token').value = null
       useCookie('user').value = null
 
-      await router.push('/')
     },
 
     /* ================= REQUEST RESET ================= */

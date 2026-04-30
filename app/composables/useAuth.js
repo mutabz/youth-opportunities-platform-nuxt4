@@ -10,15 +10,18 @@ export const useAuth = () => {
       loadingLogin.value = true
 
       await userStore.login(credentials)
-      await navigateTo('/user/dashboard')
-      return { success: true }
+      if (userStore.token !== null){
+        return { success: true, message: 'Logged In Successful!!' }
+      } else {
+        return { success: false, message: 'Login failed' }
+      }
     } catch (error) {
       return {
         success: false,
         message: error?.message || 'Login failed'
       }
     } finally {
-      loadingLogin.value = false
+      loadingLogin.value = false      
     }
   }
 

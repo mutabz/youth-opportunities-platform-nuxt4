@@ -39,6 +39,14 @@
                     <h2>Login to YOP</h2>
                     <h2 class="mb-5">Login as normal user<strong> or </strong> <span @click="activeForm='admin-login'" class="text-blue"> Login As admin or partner</span></h2>
 
+                    <section v-if="errorMessage" class="info warning d-flex justify-content-center align-items-center mb-3">
+                      {{ errorMessage }}
+                    </section>
+
+                    <section v-if="successMessage" class="info success d-flex justify-content-center align-items-center mb-3">
+                      {{ successMessage }}
+                    </section>
+
                     <div class="form-floating mb-3">
                       <input type="email" class="form-control" id="loginEmail" v-model="loginForm.email" placeholder="name@example.com" required >
                       <label for="loginEmail">Email address</label>
@@ -208,12 +216,16 @@
 
 <script setup>
 import { useDeviceType } from "@/composables/useDeviceType";
-
+import { useRouter } from 'vue-router'
 const { device } = useDeviceType();
 const { login, register, loadingLogin, loadingRegister } = useAuth()
 
 const activeForm = ref('user-login')
 const showPassword = ref(false)
+const router = useRouter()
+const errorMessage = ref('')
+const successMessage = ref('')
+
 
 const loginForm = ref({
   email: '',
@@ -237,7 +249,12 @@ const handleLogin = async () => {
   const res = await login(loginForm.value)
 
   if (!res.success) {
-    alert(res.message)
+    await router.push('/user/dashboard')
+    errorMessage.value = res.message
+    successMessage.value = null
+  } else {
+    successMessage.value = res.message
+    errorMessage.value = null
   }
 }
 

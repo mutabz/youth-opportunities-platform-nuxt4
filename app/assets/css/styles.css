@@ -117,3 +117,26 @@
 .user-dashboard {
   padding-bottom: 3rem;
 }
+
+.info {
+    position: relative;
+    min-width: 200px;
+    min-height: 50px;
+    padding: 1rem;
+    border-radius: 15px;
+    height: auto;
+    text-align: center;
+    transition: 0.3s;
+    margin-top: 1.5rem;
+    cursor: pointer;
+
+    background: #fff;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.215);
+}
+
+.warning {
+  background: rgba(255, 0, 0, .750);
+}
+.success {
+  background: rgba(0, 255, 0, .750);
+}
