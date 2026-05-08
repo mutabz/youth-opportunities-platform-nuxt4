@@ -340,7 +340,7 @@ const users_data = ref({})
 const applications = ref([])
 const savedOpportunities = ref([])
 
-const fetchDashboardData = async(force=false) => {
+const fetchDashboardData = async(force=true) => {
 
   await Promise.all([
     dataStore.fetchData('opportunities', force),

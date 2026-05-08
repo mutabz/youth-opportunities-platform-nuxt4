@@ -126,7 +126,7 @@ const items = ref([])
 const categories = ref([])
 
 
-const fetchRequirements = async (force = false) => {
+const fetchRequirements = async (force = true) => {
   await dataStore.fetchData('opportunities', force)
   await dataStore.fetchData('opp_category')
   items.value = dataStore.items.opportunities || []
