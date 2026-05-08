@@ -183,7 +183,7 @@ const deleteId = ref(null)
 
 const opportunityTypes = ref([])
 
-const fetchOpportunities = async (force = false) => {
+const fetchOpportunities = async (force = true) => {
   loading.value = true
   await dataStore.fetchData('opportunities', force)
   await dataStore.fetchData('opp_type', force)

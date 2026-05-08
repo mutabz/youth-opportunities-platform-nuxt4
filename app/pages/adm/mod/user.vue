@@ -247,7 +247,7 @@ const deleteId = ref(null)
 
 
 
-const fetchUsers = async (force = false) => {
+const fetchUsers = async (force = true) => {
 
   loading.value = true
 

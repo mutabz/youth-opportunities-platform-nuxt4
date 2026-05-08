@@ -96,7 +96,7 @@ const dataStore = useDataStore()
 const sessions = ref([])
 
 
-const fetchSessions = async(force=false)=>{
+const fetchSessions = async(force=true)=>{
 
 await dataStore.fetchData("mentor_sessions",force)
 

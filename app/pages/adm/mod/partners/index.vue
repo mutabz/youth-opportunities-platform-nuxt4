@@ -177,7 +177,7 @@ const deleteId = ref(null)
 
 
 
-const fetchPartners = async (force=false) => {
+const fetchPartners = async (force=true) => {
 
   await dataStore.fetchData('partners', force)
 

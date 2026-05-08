@@ -131,7 +131,7 @@ const searchQuery = ref("")
 const availabilityFilter = ref("")
 
 
-const fetchMentors = async(force=false)=>{
+const fetchMentors = async(force=true)=>{
 await dataStore.fetchData("mentors",force)
 mentors.value = dataStore.items.mentors || []
 }

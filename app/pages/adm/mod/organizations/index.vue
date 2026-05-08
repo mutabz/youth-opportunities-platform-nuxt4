@@ -89,7 +89,7 @@ const searchQuery = ref("")
 const showForm = ref(false)
 const editingOrg = ref(null)
 
-const fetchOrganizations = async(force=false)=>{
+const fetchOrganizations = async(force=true)=>{
   await dataStore.fetchData("organizations", force)
   organizations.value = dataStore.items.organizations || []
 }

@@ -71,7 +71,7 @@ const showCreateForm = ref(false)
 const editingCategory = ref(null)
 const searchQuery = ref('')
 
-const fetchCategories = async (force=false) => {
+const fetchCategories = async (force=true) => {
   await dataStore.fetchData('opp_category', force)
   categories.value = dataStore.items.opp_category || []
 }

@@ -228,7 +228,7 @@ const jobSeeker  = ref({})
 const organizations  = ref([])
 const communities  = ref([])
 
-const fetchUsers = async (force = false) => {
+const fetchUsers = async (force = true) => {
   loading.value = true
   await dataStore.fetchData('users', force)
   user.value = dataStore.items.users.filter(u => u.id === id)[0]

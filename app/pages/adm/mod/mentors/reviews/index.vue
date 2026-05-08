@@ -81,7 +81,7 @@ const dataStore = useDataStore()
 const reviews = ref([])
 
 
-const fetchReviews = async(force=false)=>{
+const fetchReviews = async(force=true)=>{
 
 await dataStore.fetchData("mentor_reviews",force)
 

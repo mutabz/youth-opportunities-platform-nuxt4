@@ -195,7 +195,7 @@ const editing = ref(false)
 const form = ref({data: []})
 
 
-const fetchResources = async(force=false)=>{
+const fetchResources = async(force=true)=>{
   const id =  route.params.id
 	await dataStore.fetchData("resources",force)
 	res.value = dataStore.items.resources.find(r => r.id === id)

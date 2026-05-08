@@ -177,7 +177,7 @@ const editingApplication = ref(null)
 
 
 
-const fetchApplications = async (force=false) => {
+const fetchApplications = async (force=true) => {
 
   await dataStore.fetchData("applications", force)
 

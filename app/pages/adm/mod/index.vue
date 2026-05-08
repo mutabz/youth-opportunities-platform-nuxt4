@@ -476,7 +476,7 @@ const selectedAppId = ref('')
 const showOppModal = ref(false)
 
 
-const fetchDashboardData = async (force=false) => {
+const fetchDashboardData = async (force=true) => {
 
   await Promise.all([
     dataStore.fetchData('opportunities', force),

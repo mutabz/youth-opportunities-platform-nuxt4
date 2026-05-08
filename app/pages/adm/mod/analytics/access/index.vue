@@ -162,7 +162,7 @@ const analytics = ref({
 })
 
 // 🔥 FETCH ANALYTICS
-const fetchAnalytics = async (force = false) => {
+const fetchAnalytics = async (force = true) => {
   try {
     await dataStore.fetchData('analytics_summary', force) // make sure you have this
     analytics.value = dataStore.items.analytics_summary

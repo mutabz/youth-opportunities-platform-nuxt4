@@ -204,7 +204,7 @@ const form = ref({
 })
 
 
-const fetchResources = async(force=false)=>{
+const fetchResources = async(force=true)=>{
 	await dataStore.fetchData("resources",force)
 	resources.value = dataStore.items.resources || []
 }
